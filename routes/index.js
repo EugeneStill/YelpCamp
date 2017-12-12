@@ -22,7 +22,7 @@ router.get("/register", function(req, res){
 //HANDLE REGISTER LOGIC
 router.post("/register", function(req, res){
     var newUser = new User({username: req.body.username, email: req.body.email});
-    if(req.body.adminCode === "Yelp%Camp%123") {
+    if(req.body.adminCode === process.env.ADMINCODE) {
         newUser.isAdmin = true;
     }
     User.register(newUser, req.body.password, function(err, user){

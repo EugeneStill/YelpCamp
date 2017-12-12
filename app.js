@@ -16,7 +16,18 @@ var commentRoutes = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes = require("./routes/index");
 
-mongoose.connect("mongodb://localhost/yelp_camp", {useMongoClient: true});
+mongoose.Promise = global.Promise;
+
+var databaseUri = process.env.DATABASEURL || "mongodb://localhost/yelp_camp";
+    mongoose.connect(databaseUri, { useMongoClient: true })
+          .then(() => console.log(`Database connected at ${databaseUri}`))
+          .catch(err => console.log(`Database connection error: ${err.message}`));
+
+// console.log(process.env.GMAILPW);
+// console.log(process.env.MAPAPI);
+// console.log(process.env.ADMINCODE);
+
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
