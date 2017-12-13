@@ -19,10 +19,10 @@ var commentRoutes = require("./routes/comments"),
 mongoose.Promise = global.Promise;
 
 // PROD DB SETTING
-var databaseUri = process.env.DATABASEURL || "mongodb://localhost/yelp_camp";
+//var databaseUri = process.env.DATABASEURL || "mongodb://localhost/yelp_camp";
 
 // TEST DB SETTING
-//var databaseUri = "mongodb://localhost/yelp_camp";
+var databaseUri = "mongodb://localhost/yelp_camp";
 
     mongoose.connect(databaseUri, { useMongoClient: true })
           .then(() => console.log(`Database connected at ${databaseUri}`))
