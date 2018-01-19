@@ -28,6 +28,10 @@ router.post("/", middleware.isLoggedIn, function(req, res){
   }
   var price = req.body.price;
   geocoder.geocode(req.body.location, function (err, data) {
+      if (err || data.status === 'ZERO_RESULTS') {
+            req.flash('error', 'That location is not valid.  Please try again.');
+            return res.redirect('back');
+        }
     var lat = data.results[0].geometry.location.lat;
     var lng = data.results[0].geometry.location.lng;
     var location = data.results[0].formatted_address;
@@ -71,7 +75,11 @@ router.get("/:id/edit", middleware.checkCampgroundOwnership, function(req, res){
 
 //UPDATE CAMPGROUND
 router.put("/:id", function(req, res){
-  geocoder.geocode(req.body.location, function (err, data) {
+    geocoder.geocode(req.body.location, function (err, data) {
+        if (err || data.status === 'ZERO_RESULTS') {
+            req.flash('error', 'That location is not valid.  Please try again.');
+            return res.redirect('back');
+        }
     var lat = data.results[0].geometry.location.lat;
     var lng = data.results[0].geometry.location.lng;
     var location = data.results[0].formatted_address;
